@@ -66,5 +66,4 @@ python src/zero_shot_model.py --setting 3
 
 ```
 
----
 
