@@ -155,7 +155,7 @@ def main(setting):
     class_weight_dict = {cls: w for cls, w in zip(classes, class_weights)}
 
     # Ensemble setup
-    num_iterations = 5
+    num_iterations = 3
     ensemble_predictions = np.zeros(len(tgt_lbl))
 
     for i in range(num_iterations):
