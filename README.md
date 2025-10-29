@@ -7,6 +7,8 @@ DOI: https://doi.org/10.1007/s10664-025-10749-4
 ## Setup
 
 ```bash
+git clone https://github.com/Radowan98/ZSVulD.git
+cd ZSVulD
 pip install -r requirements.txt
 ```
 
