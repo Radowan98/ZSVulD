@@ -56,7 +56,7 @@ python src/zero_shot_model.py --setting 3
 
 ```
 @article{Haque2026ZeroShotVulnDetection,
-  author    = {Haque, Radowanul and Ali, Ahsan and McClean, Sally and others},
+  author    = {Haque, Radowanul and Ali, Aftab and McClean, Sally and Khan, Naveed},
   title     = {A Zero-Shot Framework for Cross-Project Vulnerability Detection in Source Code},
   journal   = {Empirical Software Engineering},
   volume    = {31},
