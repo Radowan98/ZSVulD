@@ -1,43 +1,70 @@
-# Vulnerability Dataset
+# Zero-Shot Cross-Project Vulnerability Detection
+**A Zero-Shot Framework for Cross-Project Vulnerability Detection in Source Code**  
+DOI: https://doi.org/10.1007/s10664-025-10749-4
 
-This repository contains a dataset for vulnerability detection used in our research study:  
-**A Zero-Shot Framework for Cross-Project Vulnerability Detection in Source Code**.
+---
 
-## 📂 Dataset Overview
+## Setup
 
-The dataset is derived from **publicly available datasets** used in prior research on vulnerability detection:
-- **Devign:** _Effective Vulnerability Identification by Learning Comprehensive Program Semantics via Graph Neural Networks_ ([DOI: 10.48550/arXiv.1909.03496](https://doi.org/10.48550/arXiv.1909.03496))
-- **REVEAL:** _Deep Learning based Vulnerability Detection: Are We There Yet?_ ([DOI: 10.48550/arXiv.2009.07235](https://doi.org/10.48550/arXiv.2009.07235))
+```bash
+pip install -r requirements.txt
+```
 
-To facilitate ease of use, we have **preprocessed and reformatted** the datasets into a single `combined.pkl` file containing labeled source code functions.
+Ensure the `dataset/` folder contains:
+- `combined_data.zip` (and/or `combined_data.pkl` if you plan to regenerate embeddings)
+- `qemu_embeddings.npy`, `qemu_labels.npy`
+- `ffm_embeddings.npy`, `ffm_labels.npy`
+- `deb_embeddings.npy`, `deb_labels.npy`
+- `chr_embeddings.npy`, `chr_labels.npy`
 
-### 🔹 **File**
-| File Name       | Description |
-|----------------|------------|
-| `combined.pkl` | A dictionary containing vulnerability-labeled functions from multiple projects (FFmpeg, Chrome, Debian, Qemu). |
+---
 
-### 🔹 **Structure**
-`combined.pkl` contains a dictionary where:
-- `combined_data["FFmpeg"]` 
-- `combined_data["Chrome"]` 
-- `combined_data["Debian"]` 
-- `combined_data["Qemu"]` 
+## Generate embeddings (optional)
 
-Each dataset consists of **source code functions** and their **binary labels** indicating whether they are **vulnerable (1) or non-vulnerable (0)**.
+If you prefer to create the `.npy` files yourself from `combined_data.pkl` using CodeBERT:
 
-## 📖 Usage
+```bash
+python src/generate_embeddings_codebert.py
+```
 
-To load the dataset in Python:
-```python
-import pickle
+This reads `dataset/combined_data.pkl` and writes `<project>_embeddings.npy` and `<project>_labels.npy` to `dataset/`.
 
-with open("combined.pkl", "rb") as f:
-    combined_data = pickle.load(f)
+---
 
-# Access datasets
-ffmpeg_data = combined_data["FFmpeg"]
-chrome_data = combined_data["Chrome"]
-debian_data = combined_data["Debian"]
-qemu_data = combined_data["Qemu"]
+## Run experiments
 
-print(ffmpeg_data)
+Setting 1: Devign (Qemu + FFmpeg) → ReVeal (Debian + Chrome)
+```bash
+python src/zero_shot_model.py --setting 1
+```
+
+Setting 2: Qemu + ReVeal (Debian + Chrome) → FFmpeg
+```bash
+python src/zero_shot_model.py --setting 2
+```
+
+Setting 3: Devign (Qemu + FFmpeg) + Chrome → Debian
+```bash
+python src/zero_shot_model.py --setting 3
+```
+
+---
+
+## Citation
+
+```
+@article{Haque2026ZeroShotVulnDetection,
+  author    = {Haque, Radowanul and Ali, Ahsan and McClean, Sally and others},
+  title     = {A Zero-Shot Framework for Cross-Project Vulnerability Detection in Source Code},
+  journal   = {Empirical Software Engineering},
+  volume    = {31},
+  number    = {3},
+  year      = {2026},
+  doi       = {10.1007/s10664-025-10749-4},
+  url       = {https://doi.org/10.1007/s10664-025-10749-4}
+}
+
+```
+
+---
+
